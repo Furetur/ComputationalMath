@@ -3,7 +3,7 @@ from typing import List
 from src.common.func import Func
 from src.common.segment import Segment
 import yaml
-from sympy import lambdify, parse_expr
+from sympy import lambdify, parse_expr, diff
 
 from src.tasks.task1_find_roots.root_approximators.bisection_approximator import BisectionApproximator
 from src.tasks.task1_find_roots.root_approximators.newton_approximator import NewtonApproximator, \
@@ -19,7 +19,7 @@ def main():
             print(e)
 
         f = parse_expr(config["f"])
-        df = parse_expr(config["df"])
+        df = diff(f)
         domain = Segment(int(config["left"]), int(config["right"]))
         func = Func(lambdify("x", f), lambdify("x", df), domain)
         N = int(config["N"])
