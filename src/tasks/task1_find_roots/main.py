@@ -49,7 +49,10 @@ def main():
             for partition in partitions:
                 print(f"\tFor root in {partition}")
                 print(f"\t\tInitial approximation: {partition.end}")
-                result = approximator.approximate(func, partition, partition.end, epsilon)
+                try:
+                    result = approximator.approximate(func, partition, partition.end, epsilon)
+                except Exception as e:
+                    print(f"\t\tApproximator FAILED: {e}")
                 print(f"\t\tResult: {result}")
                 print(f"\t\tError: {abs(func.f(result))}")
 
