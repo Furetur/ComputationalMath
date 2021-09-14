@@ -33,7 +33,7 @@ def main():
         print(f"N = {N}")
         print(f"Epsilon = {epsilon}")
         print(f"n_iterations = {n_iterations}")
-
+        print()
         print("1. Isolating roots")
 
         partitions = isolate_roots(func, N)
@@ -44,10 +44,10 @@ def main():
         root_approximators = [BisectionApproximator(), NewtonApproximator(n_iterations),
                               ModifiedNewtonApproximator(n_iterations), SecantApproximator(n_iterations)]
 
-        for i, approximator in enumerate(root_approximators):
-            print(f"2.{i + 1}. {approximator.method_name}")
-            for partition in partitions:
-                print(f"\tFor root in {partition}")
+        for partition in partitions:
+            print(f"For root in {partition}")
+            for i, approximator in enumerate(root_approximators):
+                print(f"\tMethod {i + 1}) {approximator.method_name}")
                 print(f"\t\tInitial approximation: {partition.end}")
                 try:
                     result = approximator.approximate(func, partition, partition.end, epsilon)
