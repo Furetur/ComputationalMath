@@ -1,0 +1,7 @@
+f: 10 * cos(x) - 0.1 * x * x
+df: -10 * sin(x) - 0.2 * x
+left: -8
+right: 2
+epsilon: 0.000001
+N: 10
+n_iterations: 1000
