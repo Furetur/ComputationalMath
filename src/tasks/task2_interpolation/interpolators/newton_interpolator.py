@@ -12,6 +12,10 @@ class NewtonInterpolator(Interpolator):
         self.parted_diff_calculator = PartedDiffsCalculator()
 
     def calc_approximate_value(self, x: float, nodes: List[Point2D]) -> float:
+        for node in nodes:
+            if node.x == x:
+                return node.y
+
         coefs = calc_parted_diffs(nodes)
         cur_multiple = 1
         total_value = coefs[0]
