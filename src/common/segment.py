@@ -29,5 +29,9 @@ class Segment:
             cur_start += step
         return result
 
+    def evenly_divide_into_nodes(self, num: int) -> List[float]:
+        h = (self.end - self.start) / (num - 1)
+        return [self.start + h * i for i in range(num)]
+
     def __str__(self):
         return f"[{self.start}; {self.end}]"

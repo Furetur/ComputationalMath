@@ -8,9 +8,6 @@ from src.tasks.task2_interpolation.interpolators.interpolator import Interpolato
 class NewtonInterpolator(Interpolator):
     method_name = 'Newton Interpolator'
 
-    def __init__(self):
-        self.parted_diff_calculator = PartedDiffsCalculator()
-
     def calc_approximate_value(self, x: float, nodes: List[Point2D]) -> float:
         for node in nodes:
             if node.x == x:
@@ -24,9 +21,23 @@ class NewtonInterpolator(Interpolator):
             total_value += coefs[i] * cur_multiple
         return total_value
 
-    def __calc_coefs(self, nodes: List[Point2D]) -> List[float]:
-        coefs = []
-        for i in range(1, len(nodes) + 1):
-            cur_args = tuple(nodes[:i])
-            coefs.append(self.parted_diff_calculator.get_parted_diff(cur_args))
-        return coefs
+
+class ReusableNewtonInterpolator:
+    method_name = 'Newton Interpolator'
+
+    def __init__(self, nodes: List[Point2D]):
+        assert len(nodes) > 0
+        self.nodes = nodes
+        self.coefs = calc_parted_diffs(nodes)
+
+    def calc_approximate_value(self, x: float) -> float:
+        for node in self.nodes:
+            if node.x == x:
+                return node.y
+
+        cur_multiple = 1
+        total_value = self.coefs[0]
+        for i in range(1, len(self.nodes)):
+            cur_multiple *= x - self.nodes[i - 1].x
+            total_value += self.coefs[i] * cur_multiple
+        return total_value
