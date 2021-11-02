@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from src.common.func import Func
 from src.common.segment import Segment
@@ -57,9 +57,11 @@ def main():
                 print(f"\t\tError: {abs(func.f(result))}")
 
 
-def isolate_roots(func: Func, n_partitions: int) -> List[Segment]:
+def isolate_roots(func: Func, n_partitions: int, domain: Optional[Segment] = None) -> List[Segment]:
+    if domain is None:
+        domain = func.domain
     result = []
-    for partition in func.domain.split(n_partitions):
+    for partition in domain.split(n_partitions):
         if func.has_different_signs_on_ends(partition):
             result.append(partition)
     return result

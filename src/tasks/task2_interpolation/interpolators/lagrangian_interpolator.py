@@ -9,6 +9,10 @@ class LagrangianInterpolator(Interpolator):
     method_name = 'Lagrangian Interpolator'
 
     def calc_approximate_value(self, x: float, nodes: List[Point2D]) -> float:
+        for node in nodes:
+            if node.x == x:
+                return node.y
+
         return sum(
             self.__coef(x, k, nodes) * nodes[k].y
             for k in range(len(nodes))
