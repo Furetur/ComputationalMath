@@ -20,6 +20,11 @@ class Func:
         df = diff(f_expr)
         return Func(lambdify("x", f_expr), lambdify("x", df), domain)
 
+    @staticmethod
+    def from_sympy_expr(f, domain: Segment):
+        df = diff(f)
+        return Func(lambdify("x", f), lambdify("x", df), domain)
+
     def has_different_signs_on_ends(self, segment: Segment):
         return self.f(segment.start) * self.f(segment.end) <= 0
 
