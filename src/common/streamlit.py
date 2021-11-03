@@ -20,3 +20,21 @@ def function_input(default_value: str):
         f_lambda = f_default_lambda
 
     return f, f_lambda
+
+
+def segment_input(default_a, default_b, min_a=None, min_b=None, step=0.01):
+    if default_a >= default_b:
+        raise Exception("default_a must be < default_b")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        a = st.number_input('a', value=default_a, min_value=min_a, step=step)
+
+    with col2:
+        b = st.number_input('b', value=default_b, min_value=min_b, step=step)
+
+    if a >= b:
+        st.error("a must be less than b. Now using default [a, b]")
+        return default_a, default_b
+    return a, b
