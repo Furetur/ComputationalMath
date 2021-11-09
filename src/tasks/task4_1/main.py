@@ -13,7 +13,7 @@ from src.common.streamlit import function_input, segment_input
 st.write("# 4.1 Приближенное вычисление интеграла по квадратурным формулам")
 
 with st.form('main'):
-    f_expr, f_lambda = function_input("x + sin(x) + 1")
+    f_expr, f_lambda = function_input("5*x + sin(5*x) + 1")
     a, b = segment_input(default_a=0.0, default_b=1.0)
     st.form_submit_button()
 
@@ -21,7 +21,7 @@ st.write("## Правдивое значение интеграла")
 
 integral_latex_string = r'\int_{' + str(a) + r'}^{' + str(b) + r'} f \,dx'
 
-true_integral = sympy.integrate(f_expr, (sympy.Symbol('x'), a, b))
+true_integral = float(sympy.integrate(f_expr, (sympy.Symbol('x'), a, b)))
 
 st.latex(integral_latex_string + f' = {true_integral}')
 
@@ -35,7 +35,7 @@ def rectangle_approximation(x, A):
     xlinspace = np.linspace(a, b, 100)
     fig, ax = plt.subplots()
     # function plot
-    ax.plot(xlinspace, f_lambda(xlinspace), 'b', label='f(x)')
+    ax.plot(xlinspace, [f_lambda(x) for x in xlinspace], 'b', label='f(x)')
     # rectangle
     ax.fill([a, a, a + A, a + A], [0, f_lambda(x), f_lambda(x), 0], 'lightcoral', label='rectangle')
     # the point (x, f(x))
@@ -68,7 +68,7 @@ st.latex("Error:" + fr'''| {integral_latex_string} - approx | = ''' + str(trapez
 xlinspace = np.linspace(a, b, 100)
 fig, ax = plt.subplots()
 # function plot
-ax.plot(xlinspace, f_lambda(xlinspace), 'b', label='f(x)')
+ax.plot(xlinspace, [f_lambda(x) for x in xlinspace], 'b', label='f(x)')
 # trapezoid
 if f_lambda(a) * f_lambda(b) >= 0:
     ax.fill([a, a, b, b], [0, f_lambda(a), f_lambda(b), 0], 'lightcoral', label='trapezoid')
