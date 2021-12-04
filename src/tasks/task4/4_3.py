@@ -1,4 +1,3 @@
-import dataclasses
 import sys
 from typing import List, Callable, Protocol
 
@@ -8,20 +7,17 @@ import seaborn as sns
 import sympy
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy import interpolate
-from sympy import diff, lambdify
 
 sys.path.append('')
 sys.path.append('../../..')
 
-from src.common.utils import maximize
 
 from src.common.segment import Segment
 from src.common.streamlit import function_input, segment_input
 
 sns.set_theme(style="darkgrid")
 
-st.write("# 4.2 Приближенное вычисление интеграла по составным квадратурным формулам")
+st.write("# 4.3 Сравнение погрешностей СКФ и метод Рунге")
 
 with st.form('main'):
     f_expr, f_lambda = function_input("5*x + sin(5*x) + 1")
@@ -115,8 +111,7 @@ class TrapezeApprox(Approx):
     name = 'Trapezoid'
 
     def calc(self, parts: List[Segment]) -> float:
-        return parts[0].len() / 6 * sum(
-            f_lambda(p.start) + 4 * f_lambda((p.start + p.end) / 2) + f_lambda(p.end) for p in parts)
+        return parts[0].len() / 2 * sum(f_lambda(p.start) + f_lambda(p.end) for p in parts)
 
 
 class SimpApprox(Approx):
