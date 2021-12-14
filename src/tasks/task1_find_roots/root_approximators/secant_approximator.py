@@ -9,8 +9,8 @@ from src.tasks.task1_find_roots.root_approximators.root_approximator import Root
 class SecantApproximator(RootApproximator):
     method_name = "Secant"
 
-    def __init__(self, n_iterations: float):
-        self.n_iterations = n_iterations
+    def __init__(self, max_n_iterations: float):
+        self.max_n_iterations = max_n_iterations
 
     def calc_next_approximation(self, func: Func, cur_x: float, prev_x: float) -> float:
         return cur_x - func.f(cur_x) * (cur_x - prev_x) / (func.f(cur_x) - func.f(prev_x))
@@ -28,7 +28,7 @@ class SecantApproximator(RootApproximator):
 
         cur_iteration_n = 1
         while abs(cur_approx - next_approx) >= epsilon:
-            if cur_iteration_n >= self.n_iterations:
+            if cur_iteration_n >= self.max_n_iterations:
                 return None
             prev_approx = cur_approx
             cur_approx = next_approx
