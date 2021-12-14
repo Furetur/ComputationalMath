@@ -16,7 +16,7 @@ def gauss_qf(n: int):
     P_n_func = Func(f=P[n], df=None, domain=domain)
     # find roots
     approx = SecantApproximator(max_n_iterations=1000)
-    parts = isolate_roots(P_n_func, n_partitions=100000*n)
+    parts = isolate_roots(P_n_func, n_partitions=1000)
     roots = []
     for part in parts:
         root = approx.approximate(P_n_func, part, part.start, epsilon=10 ** -12)
