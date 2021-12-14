@@ -57,6 +57,8 @@ ax.plot(x, y, label='Чебышёв')
 ax.legend()
 st.pyplot(fig)
 
+st.write(f"Сумма коэф. {sum(coefs)}")
+
 with st.expander(label="Более подробно"):
     meller_df = pd.DataFrame({"Nodes": nodes, "Coefs": coefs})
     st.dataframe(meller_df)
@@ -76,7 +78,7 @@ df = pd.DataFrame({
     "Относительная погрешность": rel_errs
 })
 
-st.dataframe(df)
+st.table(df.style.format("{:.10f}"))
 
 fig, ax = plt.subplots()
 g = sns.barplot(data=df, x="Относительная погрешность", y="N", ax=ax, orient='h')

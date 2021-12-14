@@ -41,6 +41,8 @@ ax.plot(x, y, label='Лежандр')
 ax.legend()
 st.pyplot(fig)
 
+st.write(f"Сумма коэф. {sum(coefs)}")
+
 # display nodes
 with st.expander(label='Более подробно'):
     gauss_df = pd.DataFrame({"Узлы": nodes, "Коэф.": coefs})
