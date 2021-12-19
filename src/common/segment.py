@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 
 
 @dataclass(frozen=True)
@@ -32,6 +32,9 @@ class Segment:
     def evenly_divide_into_nodes(self, num: int) -> List[float]:
         h = (self.end - self.start) / (num - 1)
         return [self.start + h * i for i in range(num)]
+
+    def to_tuple(self) -> Tuple[float, float]:
+        return (self.start, self.end)
 
     def __str__(self):
         return f"[{self.start}; {self.end}]"
