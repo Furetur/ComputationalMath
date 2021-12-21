@@ -27,7 +27,7 @@ from src.common.streamlit import function_input, segment_input
 
 x_symbol = Symbol('x')
 
-st.write("# 6.1 Применение составной КФ Гаусса")
+st.write("# 6.2 Построение КФНАСТ для произвольного веса")
 
 with st.form('main'):
     ro_expr, ro_lambda = function_input("sqrt(1-x)", label="ρ(x) = ")

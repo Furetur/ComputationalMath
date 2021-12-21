@@ -25,11 +25,11 @@ from src.common.streamlit import function_input, segment_input
 st.write("# 6.1 Применение составной КФ Гаусса")
 
 with st.form('main'):
-    f_expr, f_lambda = function_input("sqrt(x)*sin(x**2)")
+    f_expr, f_lambda = function_input("sqrt(1-x)*sin(x)")
     a, b = segment_input(default_a=0.0, default_b=1.0)
     st.form_submit_button()
 
-N = st.sidebar.number_input(min_value=1, label='N: кол-во узлов')
+N = st.sidebar.number_input(min_value=1, value=2 , label='N: кол-во узлов')
 m = st.sidebar.number_input(min_value=1, label='m: кол-во разбиений')
 
 domain = Segment(a, b)
@@ -39,6 +39,11 @@ st.write(f_expr)
 
 J = integrate(f_expr, domain)
 J_approx = calc_complex_gauss(N, partitions, f_lambda)
+
+with st.expander(label='Более подробно'):
+    nodes, coefs = gauss_qf(N)
+    gauss_df = pd.DataFrame({"Узлы": nodes, "Коэф.": coefs})
+    st.dataframe(gauss_df)
 
 st.latex(f"J = {J}")
 st.latex(f"J_{{approx}} = {J_approx}")
